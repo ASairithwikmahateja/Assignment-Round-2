@@ -1,0 +1,211 @@
+{
+    "swagger": "2.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Seans-TypeScript-NodeJS-CRUD-REST-API-Boilerplate",
+        "description": "A minimal and easy to follow example of what you need to create a CRUD style API in NodeJs using TypeScript",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "Local Dev, or from Heroku"
+        },
+        {
+            "url": "/api/",
+            "description": "With docker-compose and nginx proxy"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Employee",
+            "description": "API for Employee in the system"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all Employees detail present in our system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create a new Employee in system",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Employee with id",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the cat that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get Particular Employee with given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Employee with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Employee not found."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update Employee details with given ID",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "description": "Employee with id",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    },
+                    "404": {
+                        "description": "Failed. Employee not found."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete User with given ID",
+                "tags": [
+                    "users"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete Employee records  with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Employee not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "user": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "users": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/users"
+                    }
+                }
+            }
+        }
+    }
+}
